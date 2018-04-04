@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jquery-2.1.4.min.js"></script>
+    <script src="jquery.downCount.js"></script>
+    <script type="text/javascript">
+      function Search(){
+        var name = document.getElementsByName("user_name")[0].value;
+        console.log(name);
+          $.get("http://35.154.196.70:4000/matchsylist/" + name,function(data, status){
+            data = JSON.parse(data);
+            console.log(status);
+            console.log("Name Sent!");
+            console.log(data);
+            document.getElementById('stylist').value = data['stylist'];
+          });
+      }
+    </script>
+  </head>
+  <body>
+    <br><br>
+    User Name:
+    <input class="form-control col-sm-6" name="user_name" type="text" placeholder="User Name">
+    <button type="submit" value="Search" onclick="Search()">Search</button>
+    <br><br><br><br>Stylist Id:
+    <input class="form-control col-sm-6" id="stylist" type="text" placeholder="Stylist">
+  </body>
+</html>
