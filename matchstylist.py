@@ -243,10 +243,15 @@ def makereturncountseperate():
         i = 0
         for row in reader:
             if(i != 0):
-                if row[2] in orderids.keys():
-                    orderids[row[2]] += 1
-                else:
-                    orderids[row[2]] = 1
+                #print(row[11].split(' ')[0])
+                #print((row[11].split(' ')[0]).split('-')[0])
+                if (row[11].split(' ')[0]).split('-')[0] > '2016':
+                    #print(orderids.keys())
+                    #print(row[2])
+                    if row[2] not in orderids.keys():
+                        orderids[row[2]] = 1
+                    else:
+                        orderids[row[2]] += 1
             i = i + 1
     data = {'u_id':[],'s_id':[],'o_id':[],'return_count':[],'return_count nms':[],'return_count similar':[],'nonreturn_count':[]}
     returnidsnms = []
@@ -257,7 +262,12 @@ def makereturncountseperate():
         c = 1
         for row in reader:
             if(c != 1):
-                if row[2] in orderids.keys():
+                #print(row)
+                #print(len(row))
+                #print(row[2])
+                if row[2] not in orderids.keys():
+                    print('x')
+                else:
                     if("not my style" in row[6]):
                         returnidsnms.append(row[2])
                     elif("similar to something I have" in row[6]):
@@ -273,13 +283,15 @@ def makereturncountseperate():
         for row in reader:
             if (c != 1):
                 if row[1] in orderids.keys():
-                    data['u_id'].append(row[2])
-                    data['s_id'].append(row[3])
-                    data['o_id'].append(row[1])
-                    data['return_count'].append(0)
-                    data['return_count nms'].append(0)
-                    data['return_count similar'].append(0)
-                    data['nonreturn_count'].append(orderids[row[1]])
+                    if orderids[row[1]] < 10:
+                        if row[1] not in data['o_id']:
+                            data['u_id'].append(row[2])
+                            data['s_id'].append(row[3])
+                            data['o_id'].append(row[1])
+                            data['return_count'].append(0)
+                            data['return_count nms'].append(0)
+                            data['return_count similar'].append(0)
+                            data['nonreturn_count'].append(orderids[row[1]])
             c = c + 1
     for oid in allreturns:
         if oid in data['o_id']:
