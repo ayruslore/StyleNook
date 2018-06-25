@@ -10,12 +10,10 @@ class EnableCors(object):
     api = 2
     def apply(self, fn, context):
         def _enable_cors(*args, **kwargs):
-            # set CORS headers
             response.headers['Access-Control-Allow-Origin'] = '*'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, OPTIONS'
             response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
             if bottle.request.method != 'OPTIONS':
-                # actual request; reply with the actual response
                 return fn(*args, **kwargs)
         return _enable_cors
 
@@ -78,7 +76,7 @@ def makestylistdata():
 
 @app.route('/makevariablesagain')
 def makevariablesagain():
-    #global userdict
+    global userdict
     global stylistdict
     global orders
     global stylist
@@ -103,6 +101,25 @@ def makevariablesagain():
         rownum+=1
     for s in stylist:
         stylistdict[s]=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],0];
+    rownum=0
+    style=0
+    for o in orders:
+        style+=1
+        if user[rownum] not in userdict.keys():
+            style+=1
+            rownum+=1
+            continue;
+        else:
+            for i in range(0,21):
+                stylistdict[stylist[rownum]][0][i]=float(stylistdict[stylist[rownum]][0][i])+(((float(success[rownum])-float(returns_nms[rownum])+float(returns_simi[rownum]))/5)*float(userdict[user[rownum]][i+1]))
+            stylistdict[stylist[rownum]][1]+=1
+        rownum+=1;
+    calc=0
+    for s in stylistdict:
+        if (stylistdict[s][1]!=0):
+            for i in range(0,21):
+                stylistdict[s][0][i]=float(stylistdict[s][0][i])/stylistdict[s][1]
+        calc+=stylistdict[s][1];
     ifile1.close();
 
 @app.route('/cleanuserprofile')
@@ -232,7 +249,6 @@ def cleanuserprofile():
                 num+=listing[l-2][k-2]
                 den+=1
             userdict[j][k]=float("%.3f" % (float(num)/float(den)));
-    print( userdict)
     ifile1.close();
 
 @app.route('/makereturncountsepe')
@@ -243,11 +259,7 @@ def makereturncountseperate():
         i = 0
         for row in reader:
             if(i != 0):
-                #print(row[11].split(' ')[0])
-                #print((row[11].split(' ')[0]).split('-')[0])
                 if (row[11].split(' ')[0]).split('-')[0] > '2016':
-                    #print(orderids.keys())
-                    #print(row[2])
                     if row[2] not in orderids.keys():
                         orderids[row[2]] = 1
                     else:
@@ -262,9 +274,6 @@ def makereturncountseperate():
         c = 1
         for row in reader:
             if(c != 1):
-                #print(row)
-                #print(len(row))
-                #print(row[2])
                 if row[2] not in orderids.keys():
                     print('x')
                 else:
@@ -312,54 +321,6 @@ def makereturncountseperate():
         for i in range(len(data['u_id'])):
             writer.writerow({'u_id':data['u_id'][i],'s_id':data['s_id'][i],'o_id':data['o_id'][i],'return_count':data['return_count'][i],'return_count nms':data['return_count nms'][i],'return_count similar':data['return_count similar'][i],'nonreturn_count':data['nonreturn_count'][i]})
 
-@app.route('/matchsylist/<num>')
-def matchsylist(num):
-    global userdict
-    global stylistdict
-    global orders
-    global stylist
-    global user
-    global returns_nms
-    global returns_simi
-    global success
-    rownum=0
-    style=0
-    for o in orders:
-        style+=1
-        if user[rownum] not in userdict.keys():
-            style+=1
-            rownum+=1
-            continue;
-        else:
-            for i in range(0,21):
-                stylistdict[stylist[rownum]][0][i]=float(stylistdict[stylist[rownum]][0][i])+(((float(success[rownum])-float(returns_nms[rownum])+float(returns_simi[rownum]))/5)*float(userdict[user[rownum]][i]))
-            stylistdict[stylist[rownum]][1]+=1
-        rownum+=1;
-    calc=0
-    for s in stylistdict:
-        if (stylistdict[s][1]!=0):
-            for i in range(0,21):
-                stylistdict[s][0][i]=float(stylistdict[s][0][i])/stylistdict[s][1]
-        calc+=stylistdict[s][1];
-    find=num
-    mval=0;
-    msty='';
-    matching = {}
-    for s in stylistdict:
-        val=0
-        for i in range(0,21):
-            val+=float(userdict[find][i])*float(stylistdict[s][0][i])
-        if (val>mval):
-            mval=val
-            msty=s
-        matching[s] = val
-    #print(matching)
-    matches = sorted(matching.items(), key=lambda item: (item[1], item[0]), reverse=True)
-    #print("The best stylist is "+ str(matches[:5]))
-    matches = [x[0] for x in matches]
-    print(matches)
-    yield json.dumps(getnames(matches[:5]))
-
 def matchsylist2(num):
     global userdict
     global stylistdict
@@ -369,25 +330,6 @@ def matchsylist2(num):
     global returns_nms
     global returns_simi
     global success
-    rownum=0
-    style=0
-    for o in orders:
-        style+=1
-        if user[rownum] not in userdict.keys():
-            style+=1
-            rownum+=1
-            continue;
-        else:
-            for i in range(0,21):
-                stylistdict[stylist[rownum]][0][i]=float(stylistdict[stylist[rownum]][0][i])+(((float(success[rownum])-float(returns_nms[rownum])+float(returns_simi[rownum]))/5)*float(userdict[user[rownum]][i]))
-            stylistdict[stylist[rownum]][1]+=1
-        rownum+=1;
-    calc=0
-    for s in stylistdict:
-        if (stylistdict[s][1]!=0):
-            for i in range(0,21):
-                stylistdict[s][0][i]=float(stylistdict[s][0][i])/stylistdict[s][1]
-        calc+=stylistdict[s][1];
     find=num
     mval=0;
     msty='';
@@ -395,16 +337,12 @@ def matchsylist2(num):
     for s in stylistdict:
         val=0
         for i in range(0,21):
-            val+=float(userdict[find][i])*float(stylistdict[s][0][i])
+            val+=float(userdict[find][i+1])*float(stylistdict[s][0][i])
         if (val>mval):
             mval=val
             msty=s
         matching[s] = val
-    #print(matching)
     matches = sorted(matching.items(), key=lambda item: (item[1], item[0]), reverse=True)
-    #print("The best stylist is "+ str(matches[:5]))
-    #matches = [x[0] for x in matches]
-    print(matches)
     return matches
 
 def getnames(data):
@@ -424,7 +362,7 @@ def getnames1(data):
 @app.route('/stylistids/<uid>/<sids>')
 def ranksidforuid(uid,sids):
     global stylistnames
-    #print(stylistnames)
+    global stylist, stylistdict
     sids = sids.split('s')
     rankings = matchsylist2(uid)
     sid = {}
@@ -435,17 +373,17 @@ def ranksidforuid(uid,sids):
     data = []
     data1 = [x[0] for x in sid]
     lol = getnames1(data1)
-    print(lol)
-    print(sid)
     for ids in sid:
         for i in range(len(lol)):
             if lol[i][0] == ids[0]:
                 data.append(lol[i])
-    print(data)
-    yield json.dumps(data)
+    result = []
+    for i in range(len(data)):
+        result.append([data[i][0],data[i][1], sid[i][1]])
+    yield json.dumps(result)
 
-makevariablesagain()
 cleanuserprofile()
+makevariablesagain()
 makestylistdata()
 
 app.install(EnableCors())
