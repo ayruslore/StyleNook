@@ -5466,10 +5466,10 @@
 "5771","10155","2671","45_ULSS17TP07-28-097","45_ULSS17TP07-28-097-01","PENDING","not my style","I work in a bank on the Corporate side - this will be a little on the casual side","2018-06-13 16:24:53",NULL
 "5772","10157","2671","34_2440679","34_244067905","PENDING","similar to something I have",,"2018-06-13 16:24:53",NULL
 "5773","10159","2671","19_ACCOM-101597","19_ACCOM-101597-S","PENDING","too big","I work in a bank on the Corporate side - this will be a little on the casual side. Also a bell sleeve along with peplum is something that didn't suit me","2018-06-13 16:24:53",NULL
-"5774","10185","2710","34_BLE054RG182","34_BLE054RG18205","PENDING","too expensive",,"2018-06-13 16:41:44",NULL
-"5775","10186","2710","34_B01NBN7H3N","34_B01NBN7H3NS","PENDING","too expensive",,"2018-06-13 16:41:44",NULL
-"5776","10188","2710","91_SAMTG11BLK","91_SAMTG11BLK_M","PENDING","poor quality",,"2018-06-13 16:41:44",NULL
-"5777","10189","2710","34_39","34_39","PENDING","too small",,"2018-06-13 16:41:44",NULL
+"5774","10185","2710","34_BLE054RG182","34_BLE054RG18205","ACCEPTED","too expensive",,"2018-06-27 05:37:23","2018-06-27 05:37:23"
+"5775","10186","2710","34_B01NBN7H3N","34_B01NBN7H3NS","ACCEPTED","too expensive",,"2018-06-27 05:33:53","2018-06-27 05:33:53"
+"5776","10188","2710","91_SAMTG11BLK","91_SAMTG11BLK_M","RETURNED_TO_VENDOR","poor quality",,"2018-06-27 05:34:39","2018-06-27 05:34:39"
+"5777","10189","2710","34_39","34_39","ACCEPTED","too small",,"2018-06-27 05:36:12","2018-06-27 05:36:12"
 "5778","10141","2518",,,"ACCEPTED","not my style",,"2018-06-22 07:16:50","2018-06-22 07:16:50"
 "5779","10142","2518",,,"ACCEPTED","similar to something I have",,"2018-06-22 07:30:51","2018-06-22 07:30:51"
 "5780","10144","2518","34_Pid159","34_Pid168_Sku1","ACCEPTED","similar to something I have",,"2018-06-22 07:17:11","2018-06-22 07:17:11"
@@ -5485,10 +5485,10 @@
 "5790","10154","2653","34_SAI_WTP_16501_TEL","34_SAIWTP16501TELM","ACCEPTED","not my style","This didnt flatter my body esp on the chest","2018-06-15 08:19:01","2018-06-15 08:19:01"
 "5791","10115","2591","34_2051554","34_2051554_ S","ACCEPTED","not my style",,"2018-06-22 07:15:25","2018-06-22 07:15:25"
 "5792","10118","2591","34_ASB","34_ASNM","ACCEPTED","not my style",,"2018-06-22 07:14:16","2018-06-22 07:14:16"
-"5793","10237","2685","34_2243204","34_2243204XL","PENDING","too small",,"2018-06-18 07:55:35",NULL
-"5794","10236","2685","34_BLE054RG182","34_BLE054RG18205","PENDING","similar to something I have",,"2018-06-18 07:55:35",NULL
-"5795","10235","2685","34_SAI_WTP_16501_TEL","34_SAIWTP16501TELL","PENDING","not my style",,"2018-06-18 07:55:35",NULL
-"5796","10239","2685","86_PFW-SS17-488-1","86_PFW-SS17-488-1_XL","PENDING","not my style",,"2018-06-18 07:55:35",NULL
+"5793","10237","2685","34_2243204","34_2243204XL","ACCEPTED","too small",,"2018-06-22 12:56:59","2018-06-22 12:56:59"
+"5794","10236","2685","34_BLE054RG182","34_BLE054RG18205","ACCEPTED","similar to something I have",,"2018-06-22 12:57:22","2018-06-22 12:57:22"
+"5795","10235","2685","34_SAI_WTP_16501_TEL","34_SAIWTP16501TELL","ACCEPTED","not my style",,"2018-06-22 12:56:26","2018-06-22 12:56:26"
+"5796","10239","2685","86_PFW-SS17-488-1","86_PFW-SS17-488-1_XL","RETURNED_TO_VENDOR","not my style",,"2018-06-22 12:57:35","2018-06-22 12:57:36"
 "5797","9988","2612","34_SAI_KTP_16307_WNE","34_SAI_KTP_16307_WNE_XS","ACCEPTED","not my style",,"2018-06-19 06:19:08","2018-06-19 06:19:08"
 "5798","9991","2612","34_BLP0952R3","34_BLP0952R3_21","ACCEPTED","not my style",,"2018-06-19 06:19:36","2018-06-19 06:19:36"
 "5799","10015","2570","92_AC17122AA","92_AC17122AA_L-R","RETURNED_TO_VENDOR","not my style","I would like to have the same kind of blouse except for the wrap style. Loved the material and the pattern","2018-06-18 11:56:11","2018-06-18 11:56:11"
@@ -5504,14 +5504,14 @@
 "5810","9954","2561","92_AC17145AC","92_AC17145AC_M-R","RETURNED_TO_VENDOR","poor quality",,"2018-06-19 06:21:24","2018-06-19 06:21:24"
 "5811","9955","2561","89_ID16KR126C","89_ID16KR126C-L","RETURNED_TO_VENDOR","poor quality",,"2018-06-19 06:24:53","2018-06-19 06:24:53"
 "5812","9989","2612","27_DRS00000152","27_DRS00000152S","RETURNED_TO_VENDOR","too big",,"2018-06-19 06:18:58","2018-06-19 06:18:58"
-"5813","10258","2662","34_ABOFA16AWWWTP1218401","34_ABOFA16AWWWTP12184010S","PENDING","too big",,"2018-06-18 13:04:48",NULL
-"5814","10259","2662","89_ID17KR198E","89_ID17KR198E-S","PENDING","too big",,"2018-06-18 13:04:48",NULL
-"5815","10261","2662","19_ACVRU-101393","19_ACVRU-101393-S","PENDING","too big",,"2018-06-18 13:04:48",NULL
-"5816","10262","2662","89_ID16KR125C","89_ID16KR125C-S","PENDING","too big",,"2018-06-18 13:04:48",NULL
-"5817","10231","2401","34_SLVER","34_SLVER0","PENDING","too expensive","The price tag on the neckpiece says it is Rs.150 and you are charging an additional RS. 400 for it??","2018-06-18 14:24:13",NULL
-"5818","10232","2401","19_ACVRU-101393","19_ACVRU-101393-XL","PENDING","poor quality",,"2018-06-18 14:24:13",NULL
-"5819","10233","2401",,,"PENDING","similar to something I have",,"2018-06-18 14:24:13",NULL
-"5820","10234","2401","88_2333937","88_2333937_L","PENDING","too expensive",,"2018-06-18 14:24:13",NULL
+"5813","10258","2662","34_ABOFA16AWWWTP1218401","34_ABOFA16AWWWTP12184010S","ACCEPTED","too big",,"2018-06-22 13:06:54","2018-06-22 13:06:54"
+"5814","10259","2662","89_ID17KR198E","89_ID17KR198E-S","ACCEPTED","too big",,"2018-06-22 13:12:27","2018-06-22 13:12:27"
+"5815","10261","2662","19_ACVRU-101393","19_ACVRU-101393-S","RETURNED_TO_VENDOR","too big",,"2018-06-22 13:15:23","2018-06-22 13:15:23"
+"5816","10262","2662","89_ID16KR125C","89_ID16KR125C-S","ACCEPTED","too big",,"2018-06-22 13:13:58","2018-06-22 13:13:58"
+"5817","10231","2401","34_SLVER","34_SLVER0","ACCEPTED","too expensive","The price tag on the neckpiece says it is Rs.150 and you are charging an additional RS. 400 for it??","2018-06-26 13:11:02","2018-06-26 13:11:02"
+"5818","10232","2401","19_ACVRU-101393","19_ACVRU-101393-XL","RETURNED_TO_VENDOR","poor quality",,"2018-06-26 13:09:42","2018-06-26 13:09:42"
+"5819","10233","2401",,,"ACCEPTED","similar to something I have",,"2018-06-26 13:10:25","2018-06-26 13:10:25"
+"5820","10234","2401","88_2333937","88_2333937_L","ACCEPTED","too expensive",,"2018-06-26 13:11:43","2018-06-26 13:11:43"
 "5821","10264","2691","34_ROTLS","34_ROTLS30","PENDING","too expensive",,"2018-06-20 07:04:27",NULL
 "5822","10265","2691","86_PF-AW17-423-2","86_PF-AW17-423-2_S","PENDING","too expensive",,"2018-06-20 07:04:27",NULL
 "5823","10216","2599","74_AMR000055","74_AMR000055_XS","PENDING","similar to something I have",,"2018-06-20 09:12:25",NULL
@@ -5522,9 +5522,9 @@
 "5828","10248","2695","34_LITJH158","34_C8LITJH158_M","PENDING","similar to something I have",,"2018-06-20 15:02:29",NULL
 "5829","10249","2695","34_Pid239","34_Pid248Sku1","PENDING","too small","Global desi bottom doesn’t go with my body size. I generally doesn’t fit in to that.","2018-06-20 15:02:29",NULL
 "5830","10252","2695","88_1475097","88_1475097_XL","PENDING","similar to something I have",,"2018-06-20 15:02:29",NULL
-"5831","10300","2674","19_ACEUR-101178","19_ACEUR-101178_M","PENDING","too small","It's a weird fit. It sits too wide on my hips and the lapels curve in.","2018-06-20 16:22:25",NULL
-"5832","10301","2674","86_PFW-SS18-812-2","86_PFW-SS18-812-2_L","PENDING","not my style","This is absolutely not my style. I had returned a very similar black floral top that had been given to me in an earlier box. ","2018-06-20 16:22:26",NULL
-"5833","10303","2674",,,"PENDING","not my style","Again, way off for my taste - too busy, too high low and too funky. I'm a clean lines, no fuss person with a penchant for bold statements through that.","2018-06-20 16:22:26",NULL
+"5831","10300","2674","19_ACEUR-101178","19_ACEUR-101178_M","RETURNED_TO_VENDOR","too small","It's a weird fit. It sits too wide on my hips and the lapels curve in.","2018-06-26 07:38:16","2018-06-26 07:38:16"
+"5832","10301","2674","86_PFW-SS18-812-2","86_PFW-SS18-812-2_L","RETURNED_TO_VENDOR","not my style","This is absolutely not my style. I had returned a very similar black floral top that had been given to me in an earlier box. ","2018-06-26 07:37:15","2018-06-26 07:37:15"
+"5833","10303","2674",,,"ACCEPTED","not my style","Again, way off for my taste - too busy, too high low and too funky. I'm a clean lines, no fuss person with a penchant for bold statements through that.","2018-06-26 07:36:57","2018-06-26 07:36:57"
 "5834","10254","2703",,,"PENDING","not my style",,"2018-06-21 07:26:51",NULL
 "5835","10256","2703","89_ID17KR150C","89_ID17KR150C_XL","PENDING","too big",,"2018-06-21 07:26:51",NULL
 "5836","10257","2703","34_SPPS","34_SPPS_01","PENDING","not my style",,"2018-06-21 07:26:51",NULL
@@ -5533,15 +5533,72 @@
 "5839","10357","2687","92_AC17145AC","92_AC17145AC_XS-P","PENDING","too small",,"2018-06-21 11:36:25",NULL
 "5840","10358","2687","88_2495429","88_2495429_M","PENDING","too small",,"2018-06-21 11:36:25",NULL
 "5841","10359","2687","34_BLKWHT","34_BLKWHT_0","PENDING","poor quality",,"2018-06-21 11:36:25",NULL
-"5842","10365","2627","86_PFW-SS17-488-1","86_PFW-SS17-488-1_XS","PENDING","not my style",,"2018-06-21 15:25:01",NULL
-"5843","10366","2627","34_PFW-SS17-486-1","34_PFW-SS17-486-1_M","PENDING","too big",,"2018-06-21 15:25:01",NULL
-"5844","10367","2627","34_PF-AW16-317-1","34_PF-AW16-317-1_S","PENDING","similar to something I have",,"2018-06-21 15:25:01",NULL
-"5845","10368","2627","89_ID17DR144A","89_ID17DR144A_XS","PENDING","too expensive",,"2018-06-21 15:25:01",NULL
-"5846","10369","2627","34_710847","34_710847M","PENDING","similar to something I have",,"2018-06-21 15:25:01",NULL
+"5842","10365","2627","86_PFW-SS17-488-1","86_PFW-SS17-488-1_XS","RETURNED_TO_VENDOR","not my style",,"2018-06-26 13:15:30","2018-06-26 13:15:30"
+"5843","10366","2627","34_PFW-SS17-486-1","34_PFW-SS17-486-1_M","ACCEPTED","too big",,"2018-06-27 05:28:37","2018-06-27 05:28:37"
+"5844","10367","2627","34_PF-AW16-317-1","34_PF-AW16-317-1_S","ACCEPTED","similar to something I have",,"2018-06-27 05:29:14","2018-06-27 05:29:14"
+"5845","10368","2627","89_ID17DR144A","89_ID17DR144A_XS","ACCEPTED","too expensive",,"2018-06-27 05:29:35","2018-06-27 05:29:35"
+"5846","10369","2627","34_710847","34_710847M","ACCEPTED","similar to something I have",,"2018-06-27 05:29:51","2018-06-27 05:29:51"
 "5847","10293","2542","86_PF-SS18-812-1","86_PF-SS18-812-1_XL","PENDING","not my style",,"2018-06-21 15:35:19",NULL
 "5848","10295","2542","88_2024316","88_2024316_XL","PENDING","not my style",,"2018-06-21 15:35:19",NULL
 "5849","10298","2542","34_2462589","34_2462589XL","PENDING","similar to something I have","You have sent me many such similar tops in close by colours ","2018-06-21 15:35:19",NULL
 "5850","10297","2542","88_1612322","88_1612322_L","PENDING","too small","It’s sticking to my body and that’s a little uncomfortable at work ","2018-06-21 15:35:19",NULL
-"5851","10269","2735","19_ACSIF-101676","19_ACSIF-101676-L","PENDING","too big",,"2018-06-21 17:30:38",NULL
-"5852","10271","2735","86_PF-AW17-657-1","86_PF-AW17-657-1_S","PENDING","not my style",,"2018-06-21 17:30:38",NULL
-"5853","10272","2735","34_39973020","34_BLE1146RG7","PENDING","similar to something I have",,"2018-06-21 17:30:38",NULL
+"5851","10269","2735","19_ACSIF-101676","19_ACSIF-101676-L","RETURNED_TO_VENDOR","too big",,"2018-06-27 05:42:07","2018-06-27 05:42:07"
+"5852","10271","2735","86_PF-AW17-657-1","86_PF-AW17-657-1_S","RETURNED_TO_VENDOR","not my style",,"2018-06-27 05:42:38","2018-06-27 05:42:38"
+"5853","10272","2735","34_39973020","34_BLE1146RG7","ACCEPTED","similar to something I have",,"2018-06-27 05:43:11","2018-06-27 05:43:11"
+"5854","10320","2666","92_AC17145AC","92_AC17145AC_M-P","PENDING","too expensive",,"2018-06-23 05:47:28",NULL
+"5855","10321","2666","74_AMR000016","74_AMR000016XL","PENDING","similar to something I have",,"2018-06-23 05:47:28",NULL
+"5856","10322","2666","19_ACCOM-101366","19_ACCOM-101366-M","PENDING","too small",,"2018-06-23 05:47:28",NULL
+"5857","10323","2666","34_2440678","34_2440678_03","PENDING","too expensive",,"2018-06-23 05:47:28",NULL
+"5858","10324","2666","88_3082260","88_3082260_XL","PENDING","similar to something I have",,"2018-06-23 05:47:28",NULL
+"5859","10286","2718","92_AC17145AC","92_AC17145AC_M-R","PENDING","too small",,"2018-06-23 05:57:56",NULL
+"5860","10305","2736","74_AMR000038","74_AMR000038_XS","PENDING","too expensive",,"2018-06-23 10:47:01",NULL
+"5861","10306","2736","86_PFW-SS18-835","86_PFW-SS18-835_XS","PENDING","poor quality",,"2018-06-23 10:47:01",NULL
+"5862","10307","2736","34_PADDE","34_PADDE_01","PENDING","not my style",,"2018-06-23 10:47:01",NULL
+"5863","10308","2736","34_TPPSHD","34_TPPSHDS","PENDING","poor quality",,"2018-06-23 10:47:01",NULL
+"5864","10309","2736","34_ROTLT","34_ROTLT_XS","PENDING","poor quality",,"2018-06-23 10:47:01",NULL
+"5865","10310","2660","92_AC17122AA","92_AC17122AA_M-R","PENDING","not my style",,"2018-06-24 04:34:54",NULL
+"5866","10311","2660","34_SAI_WTP_16501_TEL","34_SAIWTP16501TELL","PENDING","not my style",,"2018-06-24 04:34:54",NULL
+"5867","10312","2660",,,"PENDING","not my style",,"2018-06-24 04:34:54",NULL
+"5868","10313","2660","34_2121009","34_2121009_3XL","PENDING","similar to something I have",,"2018-06-24 04:34:54",NULL
+"5869","10314","2660","88_1612365","88_1612365_XL","PENDING","not my style",,"2018-06-24 04:34:54",NULL
+"5870","10345","2693","34_ULSS17TP07-08-121","34_ULSS17TP07-08-121-02","PENDING","similar to something I have","The same design makes my bust look bigger. Reason why I don't wear the one I own. But the colour was pretty and I realised the pattern was flattering though.","2018-06-24 04:47:18",NULL
+"5871","10347","2693","34_ORNGEBNGL","34_ORNGEBNGL0","PENDING","not my style","I rarely wear anything else apart from my watch.","2018-06-24 04:47:18",NULL
+"5872","10348","2693","14_INDI-077","14_INDI-077M","PENDING","too big",,"2018-06-24 04:47:18",NULL
+"5873","10349","2693","34_VWCT315D00775","34_VWCT315D00775_M","PENDING","too big","Plus I do not like clothing, which have two distinct different types of textile.","2018-06-24 04:47:18",NULL
+"5874","10374","2706","34_BLE054RG181","34_BLE054RG181_01","PENDING","not my style","Did not want earrings","2018-06-24 08:44:36",NULL
+"5875","10373","2706","19_ACCOM-200028","19_ACCOM-200028-S","PENDING","too expensive","The color is dull as well. i wanted bright colors","2018-06-24 08:44:36",NULL
+"5876","10372","2706","19_ACAAC-101563","19_ACAAC-101563-S","PENDING","too small","I want the same but the size is too small for my waist. ","2018-06-24 08:44:36",NULL
+"5877","10371","2706","29_GWTFWT","29_GWTFWT_S","PENDING","not my style",,"2018-06-24 08:44:37",NULL
+"5878","10325","2714","34_ACSIF-101645","34_ACSIF-101645-M","PENDING","too big","Armpits are too big","2018-06-24 13:15:01",NULL
+"5879","10326","2714","86_PF-AW17-657-1","86_PF-AW17-657-1_M","PENDING","not my style",,"2018-06-24 13:15:01",NULL
+"5880","10327","2714","83_907803394092","83_4508","PENDING","too big","looks loose and long too","2018-06-24 13:15:01",NULL
+"5881","10328","2714","88_2449222","88_2449222_M","PENDING","similar to something I have",,"2018-06-24 13:15:01",NULL
+"5882","10329","2714",,,"PENDING","similar to something I have","not sure it can be work to office. Will consider this may be after losing some weight","2018-06-24 13:15:01",NULL
+"5883","10335","2711","34_SAI_WTP_16527_DKRS","34_SAIWTP16527DKRSS","PENDING","poor quality",,"2018-06-24 13:25:32",NULL
+"5884","10336","2711","34_FRMISP","34_FRMISPM","PENDING","not my style",,"2018-06-24 13:25:32",NULL
+"5885","10338","2711",,,"PENDING","not my style","The print didn't do anything for me . ","2018-06-24 13:25:32",NULL
+"5886","10339","2711","34_SAI_WTP_16526_OC","34_SAI_WTP_16526_OC_S","PENDING","poor quality","I am also sending the blue florsl top . ","2018-06-24 13:25:32",NULL
+"5887","10330","2676","34_5022","34_502208","PENDING","too expensive",,"2018-06-24 14:34:02",NULL
+"5888","10331","2676","19_ACSIF-101676","19_ACSIF-101676-S","PENDING","too expensive",,"2018-06-24 14:34:02",NULL
+"5889","10332","2676","86_PF-AW17-627-1","86_PF-AW17-627-1_S","PENDING","too expensive",,"2018-06-24 14:34:02",NULL
+"5890","10333","2676","86_PFW-SS18-835","86_PFW-SS18-835_S","PENDING","too expensive",,"2018-06-24 14:34:02",NULL
+"5891","10334","2676","34_ULSS17TP07-28-087","34_ULSS17TP07-28-087-02","PENDING","too expensive",,"2018-06-24 14:34:02",NULL
+"5892","10191","2696","34_PID21Gold","34_SKU21","ACCEPTED","not my style",,"2018-06-26 11:55:58","2018-06-26 11:55:58"
+"5893","10192","2696","88_PWTF00620","88_PWTF00620_34","RETURNED_TO_VENDOR","too small","tight","2018-06-26 11:54:49","2018-06-26 11:54:49"
+"5894","10193","2696","88_3082260","88_3082260_XL","RETURNED_TO_VENDOR","too small","tight","2018-06-26 11:55:25","2018-06-26 11:55:25"
+"5895","10194","2696",,,"ACCEPTED","similar to something I have","already have it in navy blur color","2018-06-26 11:54:12","2018-06-26 11:54:12"
+"5896","10060","2650","34_ABOFS17AWFSTP1095204","34_ABOFS17AWFSTP1095204XL","ACCEPTED","similar to something I have",,"2018-06-26 11:47:43","2018-06-26 11:47:43"
+"5897","10061","2650","45_ULSS17TP07-03-166","45_ULSS17TP07-03-166-04","RETURNED_TO_VENDOR","similar to something I have",,"2018-06-26 11:47:02","2018-06-26 11:47:02"
+"5898","10063","2650","34_2243228","34_2243228_XL","ACCEPTED","similar to something I have",,"2018-06-26 11:47:53","2018-06-26 11:47:53"
+"5899","10350","2686","34_ABOFS17AWFSTP1095204","34_ABOFS17AWFSTP1095204XL","PENDING","too small","tight only at stomach. rest of fitting fine","2018-06-26 17:49:30",NULL
+"5900","10351","2686","88_2252465","88_2252465_L","PENDING","too small","tight only at stomach","2018-06-26 17:49:30",NULL
+"5901","10353","2686",,,"PENDING","poor quality","the fabric felt as it will just give away after first wash","2018-06-26 17:49:30",NULL
+"5902","10405","2725","34_BLHT02","34_BLHT02_S","PENDING","not my style",,"2018-06-27 02:15:46",NULL
+"5903","10406","2725","89_ID17KR149A","89_ID17KR149A_M","PENDING","not my style",,"2018-06-27 02:15:46",NULL
+"5904","10407","2725","88_1674541","88_1674541_M","PENDING","not my style",,"2018-06-27 02:15:46",NULL
+"5905","10408","2725","91_SAM/LG/83IM","91_SAMLG83IM_M","PENDING","too expensive",,"2018-06-27 02:15:46",NULL
+"5906","10409","2725","34_TCRRT","34_TCRRT_M","PENDING","too small",,"2018-06-27 02:15:46",NULL
+"5907","10396","2704","89_ID17DR144B","89_ID17DR144B_XL","PENDING","too big","one size bigger than me","2018-06-27 06:50:37",NULL
+"5908","10398","2704","86_PF-SS18-834-1","86_PF-SS18-834-1_L","PENDING","too big","shoulders dropping beyong the normal point and looks too huge on me","2018-06-27 06:50:37",NULL
+"5909","10400","2747","34_Pid192","34_Pid201_Sku1","PENDING","too small",,"2018-06-27 07:04:06",NULL
+"5910","10402","2747","88_1331713","88_1331713_S","PENDING","too small",,"2018-06-27 07:04:06",NULL

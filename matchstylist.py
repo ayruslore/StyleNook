@@ -59,12 +59,9 @@ def makestylistdata():
     lol = []
     with open('returncountsepe.csv','r') as f:
         reader = csv.reader(f)
-        i = 0
         for row in reader:
-            if(i != 0):
                 if row[1] not in lol:
                     lol.append(row[1])
-            i = i + 1
     with open('wp_users.csv','r') as f:
         reader = csv.reader(f)
         for row in reader:
@@ -89,8 +86,8 @@ def makevariablesagain():
     rownum=0
     header=[];
     for row in reader1:
-        if (rownum==0):
-            header=row
+        if rownum==0:
+            header = row
         else:
                orders.append(row[2]);
                stylist.append(row[1]);
@@ -98,9 +95,9 @@ def makevariablesagain():
                returns_nms.append(int(row[4]));
                returns_simi.append(int(row[5]))
                success.append(int(row[6]));
-        rownum+=1
+        rownum += 1
     for s in stylist:
-        stylistdict[s]=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],0];
+        stylistdict[s]=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],0];
     rownum=0
     style=0
     for o in orders:
@@ -110,14 +107,14 @@ def makevariablesagain():
             rownum+=1
             continue;
         else:
-            for i in range(0,21):
+            for i in range(0,19):
                 stylistdict[stylist[rownum]][0][i]=float(stylistdict[stylist[rownum]][0][i])+(((float(success[rownum])-float(returns_nms[rownum])+float(returns_simi[rownum]))/5)*float(userdict[user[rownum]][i+1]))
             stylistdict[stylist[rownum]][1]+=1
         rownum+=1;
     calc=0
     for s in stylistdict:
         if (stylistdict[s][1]!=0):
-            for i in range(0,21):
+            for i in range(0,19):
                 stylistdict[s][0][i]=float(stylistdict[s][0][i])/stylistdict[s][1]
         calc+=stylistdict[s][1];
     ifile1.close();
@@ -131,9 +128,6 @@ def cleanuserprofile():
     userdict={}
     l=[]
     for row in reader1:
-        if (rownum==0):
-            rownum+=1;
-        else:
             userdict[row[1]]=[]
             userdict[row[1]].append(row[1])
             if (row[6].strip().lower()=="never"):
@@ -155,14 +149,6 @@ def cleanuserprofile():
                     userdict[row[1]].append(1);
                 else:
                     userdict[row[1]].append(0);
-            if (row[19]!='NULL'):
-                userdict[row[1]].append(int(row[19])+1);
-            else:
-                userdict[row[1]].append(0);
-            if (row[20]!='NULL'):
-                userdict[row[1]].append(int(row[20])+1);
-            else:
-                userdict[row[1]].append(0);
             if (row[36].strip().lower()=="a"):
                 userdict[row[1]].append(8);
             elif (row[36].strip().lower()=="b"):
@@ -210,7 +196,6 @@ def cleanuserprofile():
                 userdict[row[1]].append(float(row[54]));
             else:
                 userdict[row[1]].append(0);
-            rownum+=1;
     listing={}
     counter=0;
     for j in range(2,11):
@@ -256,24 +241,19 @@ def makereturncountseperate():
     orderids = {}
     with open('order_final_products.csv','r') as f:
         reader = csv.reader(f)
-        i = 0
         for row in reader:
-            if(i != 0):
                 if (row[11].split(' ')[0]).split('-')[0] > '2016':
                     if row[2] not in orderids.keys():
                         orderids[row[2]] = 1
                     else:
                         orderids[row[2]] += 1
-            i = i + 1
     data = {'u_id':[],'s_id':[],'o_id':[],'return_count':[],'return_count nms':[],'return_count similar':[],'nonreturn_count':[]}
     returnidsnms = []
     returnidsstih = []
     allreturns = []
     with open('returns.csv', 'r') as f:
         reader = csv.reader(f)
-        c = 1
         for row in reader:
-            if(c != 1):
                 if row[2] not in orderids.keys():
                     print('x')
                 else:
@@ -283,14 +263,11 @@ def makereturncountseperate():
                         returnidsstih.append(row[2])
                     if(row[2] != '1' or row[2] != '550'):
                         allreturns.append(row[2])
-            c = c + 1
     returnorderids = Removedup(returnidsnms)
     returnorderids1 = Removedup(returnidsstih)
     with open('stylist.csv', 'r') as f:
         reader = csv.reader(f)
-        c = 1
         for row in reader:
-            if (c != 1):
                 if row[1] in orderids.keys():
                     if orderids[row[1]] < 10:
                         if row[1] not in data['o_id']:
@@ -301,7 +278,6 @@ def makereturncountseperate():
                             data['return_count nms'].append(0)
                             data['return_count similar'].append(0)
                             data['nonreturn_count'].append(orderids[row[1]])
-            c = c + 1
     for oid in allreturns:
         if oid in data['o_id']:
             i = data['o_id'].index(oid)
@@ -336,7 +312,7 @@ def matchsylist2(num):
     matching = {}
     for s in stylistdict:
         val=0
-        for i in range(0,21):
+        for i in range(0,19):
             val+=float(userdict[find][i+1])*float(stylistdict[s][0][i])
         if (val>mval):
             mval=val
@@ -363,7 +339,7 @@ def getnames1(data):
 def ranksidforuid(uid,sids):
     global stylistnames
     global stylist, stylistdict
-    sids = sids.split('s')
+    sids = sids.split(',')
     rankings = matchsylist2(uid)
     sid = {}
     for i in range(len(rankings)):
