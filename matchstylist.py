@@ -97,7 +97,7 @@ def makevariablesagain():
                success.append(int(row[6]));
         rownum += 1
     for s in stylist:
-        stylistdict[s]=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],0];
+        stylistdict[s]=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],0];
     rownum=0
     style=0
     for o in orders:
@@ -107,14 +107,14 @@ def makevariablesagain():
             rownum+=1
             continue;
         else:
-            for i in range(0,19):
+            for i in range(0,21):
                 stylistdict[stylist[rownum]][0][i]=float(stylistdict[stylist[rownum]][0][i])+(((float(success[rownum])-float(returns_nms[rownum])+float(returns_simi[rownum]))/5)*float(userdict[user[rownum]][i+1]))
             stylistdict[stylist[rownum]][1]+=1
         rownum+=1;
     calc=0
     for s in stylistdict:
         if (stylistdict[s][1]!=0):
-            for i in range(0,19):
+            for i in range(0,21):
                 stylistdict[s][0][i]=float(stylistdict[s][0][i])/stylistdict[s][1]
         calc+=stylistdict[s][1];
     ifile1.close();
@@ -149,6 +149,24 @@ def cleanuserprofile():
                     userdict[row[1]].append(1);
                 else:
                     userdict[row[1]].append(0);
+            if (row[23]=="Mostly Indian ethnic clothes"):
+                userdict[row[1]].append(5);
+            elif (row[23]=="A good mix of Western and Indian clothes"):
+                userdict[row[1]].append(25);
+            elif (row[23]=="Mostly Western clothes"):
+                userdict[row[1]].append(45);
+            else:
+                userdict[row[1]].append(0);
+            if ("professional" in row[25]):
+                userdict[row[1]].append(3);
+            elif ("bit" in row[25]):
+                userdict[row[1]].append(6);
+            elif ("experiment" in row[25]):
+                userdict[row[1]].append(9);
+            elif ("individualistic" in row[25]):
+                userdict[row[1]].append(12);
+            else:
+                userdict[row[1]].append(0);
             if (row[36].strip().lower()=="a"):
                 userdict[row[1]].append(8);
             elif (row[36].strip().lower()=="b"):
@@ -196,6 +214,8 @@ def cleanuserprofile():
                 userdict[row[1]].append(float(row[54]));
             else:
                 userdict[row[1]].append(0);
+            #if row[1]=="9174":
+                #print (userdict[row[1]]);
     listing={}
     counter=0;
     for j in range(2,11):
@@ -312,7 +332,7 @@ def matchsylist2(num):
     matching = {}
     for s in stylistdict:
         val=0
-        for i in range(0,19):
+        for i in range(0,21):
             val+=float(userdict[find][i+1])*float(stylistdict[s][0][i])
         if (val>mval):
             mval=val
@@ -356,6 +376,50 @@ def ranksidforuid(uid,sids):
     result = []
     for i in range(len(data)):
         result.append([data[i][0],data[i][1], sid[i][1]])
+    yield json.dumps(result)
+
+@app.route('/stylistreturncolumn/<sid>/<num>')
+def stylistreturnaccordingtocolumn(sid,num):
+    ifile1 = open('returncountsepe.csv', "r")
+    reader1 = csv.reader(ifile1)
+    returns = 0
+    nonreturns = 0
+    uids = []
+    user = {}
+    for row in reader1:
+        if row[1] == sid:
+            uids.append(row[0])
+            returns += int(row[3]) + int(row[4]) + int(row[5])
+            nonreturns += int(row[6])
+            if row[0] not in user.keys():
+                user[row[0]] = {'return':int(row[3]) + int(row[4]) + int(row[5]), 'nonreturn':int(row[6])}
+            else:
+                user[row[0]]['return'] += int(row[3]) + int(row[4]) + int(row[5])
+                user[row[0]]['nonreturn'] += int(row[6])
+    print(uids)
+    data = {}
+    ifile1.close()
+    ifile2 = open('userprofiles.csv','r')
+    reader2 = csv.reader(ifile2)
+    for row in reader2:
+        if row[1] in uids:
+            data[row[1]] = row[int(num)]
+    check = {}
+    for ids in data.keys():
+        if data[ids] not in check.keys():
+            check[data[ids]] = [ids]
+        else:
+            check[data[ids]].append(ids)
+    tot = 0
+    result = {}
+    ifile2.close()
+    for cloth in check.keys():
+        ret = 0
+        nonret =0
+        for ids in check[cloth]:
+            ret += user[ids]['return']
+            nonret += user[ids]['nonreturn']
+        result[cloth] = (ret/(ret+nonret))*100
     yield json.dumps(result)
 
 cleanuserprofile()
