@@ -60,8 +60,8 @@ def makestylistdata():
     with open('returncountsepe.csv','r') as f:
         reader = csv.reader(f)
         for row in reader:
-                if row[1] not in lol:
-                    lol.append(row[1])
+            if row[1] not in lol:
+                lol.append(row[1])
     with open('wp_users.csv','r') as f:
         reader = csv.reader(f)
         for row in reader:
@@ -198,15 +198,15 @@ def cleanuserprofile():
             else:
                 userdict[row[1]].append(0);
             for i in range(38,45):
-                if (('upto' in row[37]) and ('750' in row[37])):
+                if (('upto' in row[i]) and ('750' in row[i])):
                     userdict[row[1]].append(1);
-                elif (('upto' in row[37]) and ('1000' in row[37])):
+                elif (('upto' in row[i]) and ('1000' in row[i])):
                     userdict[row[1]].append(2);
-                elif (('upto' in row[37]) and ('1500' in row[37])):
+                elif (('upto' in row[i]) and ('1500' in row[i])):
                     userdict[row[1]].append(3);
-                elif (('upto' in row[37]) and ('2000' in row[37])):
+                elif (('upto' in row[i]) and ('2000' in row[i])):
                     userdict[row[1]].append(4);
-                elif (('2000' in row[37]) and ('upto' not in row[37])):
+                elif (('2000' in row[i]) and ('upto' not in row[i])):
                     userdict[row[1]].append(5);
                 else:
                     userdict[row[1]].append(0);
@@ -396,23 +396,108 @@ def stylistreturnaccordingtocolumn(sid,num):
             else:
                 user[row[0]]['return'] += int(row[3]) + int(row[4]) + int(row[5])
                 user[row[0]]['nonreturn'] += int(row[6])
-    #print(uids)
     data = {}
     ifile1.close()
     ifile2 = open('userprofiles.csv','r')
     reader2 = csv.reader(ifile2)
     for row in reader2:
         if row[1] in uids:
-            data[row[1]] = row[int(num)]
+            data[row[1]] = [row[int(num)]]
+            if int(num) == 6:
+                if (row[6].strip().lower()=="never"):
+                    data[row[1]].append(1)
+                elif ((row[6].strip().lower()=="sometimes") or (row[6].strip().lower()=="a little bit")):
+                    data[row[1]].append(2)
+                elif (row[6].strip().lower()=="all the time!"):
+                    data[row[1]].append(3)
+                else:
+                    data[row[1]].append(0)
+            if int(num) in [10,11,12,13,14,15,16,17,18]:
+                if ("Umm OK" in row[int(num)]) or ("OK." in row[int(num)]):
+                    data[row[1]].append(2)
+                elif ("Love it!" in row[int(num)]) or ("Love this collection!" in row[int(num)]):
+                    data[row[1]].append(4)
+                elif "Quite like this range" in row[int(num)]:
+                    data[row[1]].append(3)
+                elif 'Hate this collection!' in row[int(num)]:
+                    data[row[1]].append(1)
+                else:
+                    data[row[1]].append(0)
+            if int(num) == 23:
+                if ('mostly western' in row[23].strip().lower()) and ('indian' not in row[23].strip().lower()):
+                    data[row[1]].append(1)
+                elif ('mix' in row[23].strip().lower()) and ('western' in row[23].strip().lower()) and ('indian' in row[23].strip().lower()):
+                    data[row[1]].append(2)
+                elif ('indian' in row[23].strip().lower()) and ('ethnic' in row[23].strip().lower()):
+                    data[row[1]].append(3)
+                elif ('western' not in row[23].strip().lower()) and ('indian' in row[23].strip().lower()):
+                    data[row[1]].append(4)
+                else:
+                    data[row[1]].append(0)
+            if int(num) == 25:
+                if (("stick" in row[25]) and ("professional" in row[25])):
+                    data[row[1]].append(4)
+                elif (("bit" in row[25]) and ("add" in row[25])):
+                    data[row[1]].append(3)
+                elif ("experiment a bit" in row[25]):
+                    data[row[1]].append(2)
+                elif ("individualistic" in row[25]):
+                    data[row[1]].append(1)
+                else:
+                    data[row[1]].append(0)
+            if int(num) == 36:
+                if "a" in row[36].strip().lower():
+                    data[row[1]].append('A')
+                elif "b" in row[36].strip().lower():
+                    data[row[1]].append('B')
+                elif "c" in row[36].strip().lower():
+                    data[row[1]].append('C')
+                elif "d" in row[36].strip().lower():
+                    data[row[1]].append('D')
+                elif "e" in row[36].strip().lower():
+                    data[row[1]].append('E')
+                elif "f" in row[36].strip().lower():
+                    data[row[1]].append('F')
+                elif "g" in row[36].strip().lower():
+                    data[row[1]].append('G')
+                elif "h" in row[36].strip().lower():
+                    data[row[1]].append('H')
+                elif "i" in row[36].strip().lower():
+                    data[row[1]].append('I')
+                else:
+                    data[row[1]].append('J')
+            if int(num) == 37:
+                if (('18' in row[37]) and ('24' in row[37])):
+                    data[row[1]].append(1)
+                elif (('25' in row[37]) and ('29' in row[37])):
+                    data[row[1]].append(2)
+                elif (('30' in row[37]) and ('34' in row[37])):
+                    data[row[1]].append(3)
+                elif (('35' in row[37]) and ('40' in row[37])):
+                    data[row[1]].append(4)
+                elif (('40' in row[37]) and ('35' not in row[37]) and ('+' in row[37])):
+                    data[row[1]].append(5)
+                else:
+                    data[row[1]].append(0)
+            if int(num) in [38,39,40,41,42,43,44,45]:
+                if (('upto' in row[int(num)]) and ('750' in row[int(num)])):
+                    data[row[1]].append(1)
+                elif (('upto' in row[int(num)]) and ('1000' in row[int(num)])):
+                    data[row[1]].append(2)
+                elif (('upto' in row[int(num)]) and ('1500' in row[int(num)])):
+                    data[row[1]].append(3)
+                elif (('upto' in row[int(num)]) and ('2000' in row[int(num)])):
+                    data[row[1]].append(4)
+                elif (('2000' in row[int(num)]) and ('upto' not in row[int(num)])):
+                    data[row[1]].append(5)
+                else:
+                    data[row[1]].append(0)
     check = {}
-    #print(data)
     for ids in data.keys():
-        if data[ids] not in check.keys():
-            check[data[ids]] = [ids]
+        if data[ids][1] not in check.keys():
+            check[data[ids][1]] = [ids]
         else:
-            check[data[ids]].append(ids)
-    #print(check)
-    #print(user)
+            check[data[ids][1]].append(ids)
     tot = 0
     result = {}
     ifile2.close()
@@ -423,9 +508,98 @@ def stylistreturnaccordingtocolumn(sid,num):
             ret += user[ids]['return']
             nonret += user[ids]['nonreturn']
         result[cloth] = (float(ret*100)/float(ret+nonret))
-        #print(ret, nonret, result[cloth])
-    result.pop("",None)
-    yield json.dumps(result)
+    finalresult = {}
+    for keys in result.keys():
+        if int(num) == 6:
+            if keys == 1:
+                finalresult["never"] = result[1]
+            elif keys == 2:
+                finalresult["sometimes (or) a little bit"] = result[2]
+            elif keys == 3:
+                finalresult["all the time!"] = result[3]
+            else:
+                finalresult['GARBAGE VALUES (OR) NULL'] = result[0]
+        if int(num) in [10,11,12,13,14,15,16,17,18]:
+            if keys == 2:
+                finalresult["Umm OK"] = result[2]
+            elif keys == 4:
+                finalresult["Love this collection!"] = result[4]
+            elif keys == 3:
+                finalresult["Quite like this range"] = result[3]
+            elif keys == 1:
+                finalresult["Hate this collection!"] = result[1]
+            else:
+                finalresult['GARBAGE VALUES (OR) NULL'] = result[0]
+        if int(num) == 23 :
+            if keys == 1:
+                finalresult["Mostly Western Clothes"] = result[1]
+            elif keys == 2:
+                finalresult["Mix of Western and Indian Clothes"] = result[2]
+            elif keys == 3 :
+                finalresult["Mostly Indian Ethnic Clothes"] = result[3]
+            elif keys == 4 :
+                finalresult["Mostly Indian Clothes"] = result[4]
+            else:
+                finalresult['GARBAGE VALUES (OR) NULL'] = result[0]
+        if int(num) == 25:
+            if keys == 1:
+                finalresult['be highly individualistic creating your own look'] = result[1]
+            elif keys == 3:
+                finalresult['add your bit to the professional work look'] = result[3]
+            elif keys == 4:
+                finalresult['stick to the professional work look'] = result[4]
+            elif keys == 2:
+                finalresult['experiment a bit more'] = result[2]
+            else:
+                finalresult['GARBAGE VALUES (OR) NULL'] = result[0]
+        if int(num) == 36:
+            if keys == 'A':
+                finalresult['A'] = result['A']
+            elif keys == 'B':
+                finalresult['B'] = result['B']
+            elif keys == 'C':
+                finalresult['C'] = result['C']
+            elif keys == 'D':
+                finalresult['D'] = result['D']
+            elif keys == 'E':
+                finalresult['E'] = result['E']
+            elif keys == 'F':
+                finalresult['F'] = result['F']
+            elif keys == 'G':
+                finalresult['G'] = result['G']
+            elif keys == 'H':
+                finalresult['H'] = result['H']
+            elif keys == 'I':
+                finalresult['I'] = result['I']
+            else:
+                finalresult['GARBAGE VALUES (OR) NULL'] = result['J']
+        if int(num) == 37:
+            if keys == 1:
+                finalresult['18 - 24 years'] = result[1]
+            elif keys == 2:
+                finalresult['25 - 29 years'] = result[2]
+            elif keys == 3:
+                finalresult['30 - 34 years'] = result[3]
+            elif keys == 4:
+                finalresult['35 - 40 years'] = result[4]
+            elif keys == 5:
+                finalresult['40 + years'] = result[5]
+            else:
+                finalresult['GARBAGE VALUES (OR) NULL'] = result[0]
+        if int(num) in [38,39,40,41,42,43,44,45]:
+            if keys == 1:
+                finalresult['Upto Rs 750'] = result[1]
+            elif keys == 2:
+                finalresult['Upto Rs 1000'] = result[2]
+            elif keys == 3:
+                finalresult['Upto Rs 1500'] = result[3]
+            elif keys == 4:
+                finalresult['Upto Rs 2000'] = result[4]
+            elif keys == 5:
+                finalresult['Rs 2000+ '] = result[5]
+            else:
+                finalresult['GARBAGE VALUES (OR) NULL'] = result[0]
+    yield json.dumps(finalresult)
 
 cleanuserprofile()
 makevariablesagain()
