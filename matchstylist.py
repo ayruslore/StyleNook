@@ -396,7 +396,7 @@ def stylistreturnaccordingtocolumn(sid,num):
             else:
                 user[row[0]]['return'] += int(row[3]) + int(row[4]) + int(row[5])
                 user[row[0]]['nonreturn'] += int(row[6])
-    print(uids)
+    #print(uids)
     data = {}
     ifile1.close()
     ifile2 = open('userprofiles.csv','r')
@@ -405,11 +405,14 @@ def stylistreturnaccordingtocolumn(sid,num):
         if row[1] in uids:
             data[row[1]] = row[int(num)]
     check = {}
+    #print(data)
     for ids in data.keys():
         if data[ids] not in check.keys():
             check[data[ids]] = [ids]
         else:
             check[data[ids]].append(ids)
+    #print(check)
+    #print(user)
     tot = 0
     result = {}
     ifile2.close()
@@ -419,7 +422,9 @@ def stylistreturnaccordingtocolumn(sid,num):
         for ids in check[cloth]:
             ret += user[ids]['return']
             nonret += user[ids]['nonreturn']
-        result[cloth] = (ret/(ret+nonret))*100
+        result[cloth] = (float(ret*100)/float(ret+nonret))
+        #print(ret, nonret, result[cloth])
+    result.pop("",None)
     yield json.dumps(result)
 
 cleanuserprofile()
