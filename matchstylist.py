@@ -4,6 +4,7 @@ import bottle
 import csv
 import sys
 import json
+import statistics
 
 class EnableCors(object):
     name = 'enable_cors'
@@ -26,6 +27,7 @@ global user
 global returns_nms
 global returns_simi
 global success
+global mediandata
 
 userdict={}
 stylistdict={}
@@ -36,7 +38,7 @@ returns_nms=[]
 returns_simi=[]
 success=[]
 stylistnames = []
-
+mediandata = []
 
 def Removedup(duplicate):
     final_list = []
@@ -81,6 +83,7 @@ def makevariablesagain():
     global returns_nms
     global returns_simi
     global success
+    global mediandata
     ifile1 = open('returncountsepe.csv', "r")
     reader1 = csv.reader(ifile1)
     rownum=0
@@ -118,6 +121,13 @@ def makevariablesagain():
                 stylistdict[s][0][i]=float(stylistdict[s][0][i])/stylistdict[s][1]
         calc+=stylistdict[s][1];
     ifile1.close();
+    mediandata = []
+    rsid = list(stylistdict.keys())
+    for i in range(len(stylistdict[rsid[0]][0])):
+        data = []
+        for styid in stylistdict.keys():
+            data.append(stylistdict[styid][0][i])
+        mediandata.append(statistics.median(data))
 
 @app.route('/cleanuserprofile')
 def cleanuserprofile():
@@ -214,8 +224,6 @@ def cleanuserprofile():
                 userdict[row[1]].append(float(row[54]));
             else:
                 userdict[row[1]].append(0);
-            #if row[1]=="9174":
-                #print (userdict[row[1]]);
     listing={}
     counter=0;
     for j in range(2,11):
@@ -255,6 +263,18 @@ def cleanuserprofile():
                 den+=1
             userdict[j][k]=float("%.3f" % (float(num)/float(den)));
     ifile1.close();
+
+@app.route('/getstylistdict/<sid>')
+def stylistdictdata(sid):
+    global stylistdict
+    global mediandata
+    result = []
+    for i in range(len(stylistdict[sid][0])):
+        if stylistdict[sid][0][i] >= mediandata[i]:
+            result.append("Good")
+        else:
+            result.append("Bad")
+    yield json.dumps(result)
 
 @app.route('/makereturncountsepe')
 def makereturncountseperate():
