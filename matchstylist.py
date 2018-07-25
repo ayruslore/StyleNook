@@ -127,7 +127,7 @@ def makevariablesagain():
         data = []
         for styid in stylistdict.keys():
             data.append(stylistdict[styid][0][i])
-        mediandata.append(statistics.median(data))
+        mediandata.append(statistics.mean(data))
 
 @app.route('/cleanuserprofile')
 def cleanuserprofile():
