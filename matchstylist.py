@@ -28,6 +28,20 @@ global returns_nms
 global returns_simi
 global success
 global mediandata
+global userclusterdata
+global sizeclusters
+
+sizeclusters = {"1":[],"2":[],"3":[],"4":[],"5":[]}
+userclusterdata = {}
+with open('bodyshapecluster.csv','r') as f:
+    reader = csv.reader(f)
+    c = 0
+    for row in reader:
+        if c != 0:
+            userclusterdata[row[0]] = row[1]
+            if row[0] not in sizeclusters[row[1]]:
+                sizeclusters[row[1]].append(row[0])
+        c += 1
 
 userdict={}
 stylistdict={}
@@ -276,6 +290,30 @@ def stylistdictdata(sid):
             result.append("Bad")
     yield json.dumps(result)
 
+@app.route('/stylistreturncluster/<sid>')
+def getstylistclusterreturn(sid):
+    global stylistnames
+    global userclusterdata
+    global sizeclusters
+    data = {'1':{'return': 0, 'non-return':0}, '2':{'return': 0, 'non-return':0}, '3':{'return': 0, 'non-return':0}, '4':{'return': 0, 'non-return':0}, '5':{'return': 0, 'non-return':0}}
+    with open('returncountsepe.csv','r') as f:
+        reader = csv.reader(f)
+        c = 0
+        for row in reader:
+            if c!= 0 :
+                if row[1] == sid:
+                    if row[0] in userclusterdata.keys():
+                        data[userclusterdata[row[0]]]['return'] += int(row[3])
+                        data[userclusterdata[row[0]]]['non-return'] += int(row[6])
+            c += 1
+    for keys in data:
+        if (data[keys]['return'] + data[keys]['non-return']) != 0:
+            data[keys]['percent'] = (data[keys]['return'] * 100)/(data[keys]['return'] + data[keys]['non-return'])
+        else:
+            data[keys]['percent'] = 0
+    yield json.dumps(data)
+
+
 @app.route('/makereturncountsepe')
 def makereturncountseperate():
     orderids = {}
@@ -412,9 +450,9 @@ def stylistreturnaccordingtocolumn(sid,num):
             returns += int(row[3]) + int(row[4]) + int(row[5])
             nonreturns += int(row[6])
             if row[0] not in user.keys():
-                user[row[0]] = {'return':int(row[3]) + int(row[4]) + int(row[5]), 'nonreturn':int(row[6])}
+                user[row[0]] = {'return':int(row[3]) , 'nonreturn':int(row[6])}
             else:
-                user[row[0]]['return'] += int(row[3]) + int(row[4]) + int(row[5])
+                user[row[0]]['return'] += int(row[3])
                 user[row[0]]['nonreturn'] += int(row[6])
     data = {}
     ifile1.close()
