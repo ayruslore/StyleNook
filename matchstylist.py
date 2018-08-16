@@ -30,6 +30,7 @@ global success
 global mediandata
 global userclusterdata
 global sizeclusters
+global stylistreturnpercent
 
 sizeclusters = {"1":[],"2":[],"3":[],"4":[],"5":[]}
 userclusterdata = {}
@@ -42,6 +43,23 @@ with open('bodyshapecluster.csv','r') as f:
             if row[0] not in sizeclusters[row[1]]:
                 sizeclusters[row[1]].append(row[0])
         c += 1
+
+#stylistreturnpercent[sid] = {'return':0, 'non-return':0,'percent':0}
+stylistreturnpercent = {}
+with open('returncountsepe.csv','r') as f:
+    reader = csv.reader(f)
+    c = 0
+    for row in reader:
+        if c != 0:
+            if row[1] not in stylistreturnpercent.keys():
+                stylistreturnpercent[row[1]] = {'return':int(row[3]) + int(row[4]) + int(row[5]), 'non-return':int(row[6]), 'percent':0}
+            else:
+                stylistreturnpercent[row[1]]['return'] += int(row[3]) + int(row[4]) + int(row[5])
+                stylistreturnpercent[row[1]]['non-return'] += int(row[6])
+        c += 1
+for key in stylistreturnpercent.keys():
+    stylistreturnpercent[key]['percent'] = (100.0 * stylistreturnpercent[key]['return'])/(stylistreturnpercent[key]['non-return'] + stylistreturnpercent[key]['return'])
+    #print(stylistreturnpercent[key]['percent'], key)
 
 userdict={}
 stylistdict={}
@@ -415,7 +433,7 @@ def getnames1(data):
 
 @app.route('/stylistids/<uid>/<sids>')
 def ranksidforuid(uid,sids):
-    global stylistnames
+    global stylistnames, stylistreturnpercent
     global stylist, stylistdict
     sids = sids.split(',')
     rankings = matchsylist2(uid)
@@ -433,7 +451,8 @@ def ranksidforuid(uid,sids):
                 data.append(lol[i])
     result = []
     for i in range(len(data)):
-        result.append([data[i][0],data[i][1], sid[i][1]])
+        result.append([data[i][0],data[i][1], round(sid[i][1],4) , round(stylistreturnpercent[data[i][0]]['percent'],4)])
+        #print(data[i][0],data[i][1], sid[i][1], stylistreturnpercent[data[i][0]]['percent'])
     yield json.dumps(result)
 
 @app.route('/stylistreturncolumn/<sid>/<num>')
