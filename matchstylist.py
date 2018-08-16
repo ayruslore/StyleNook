@@ -125,7 +125,7 @@ def makevariablesagain():
             continue;
         else:
             for i in range(0,21):
-                stylistdict[stylist[rownum]][0][i]=float(stylistdict[stylist[rownum]][0][i])+(((float(success[rownum])-float(returns_nms[rownum])+float(returns_simi[rownum]))/((float(success[rownum])+float(returns_nms[rownum])+float(returns_simi[rownum])))*float(userdict[user[rownum]][i+1]))
+                stylistdict[stylist[rownum]][0][i]=float(stylistdict[stylist[rownum]][0][i])+(((float(success[rownum])-float(returns_nms[rownum])+float(returns_simi[rownum]))/5)*float(userdict[user[rownum]][i+1]))
             stylistdict[stylist[rownum]][1]+=1
         rownum+=1;
     calc=0
