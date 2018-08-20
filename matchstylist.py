@@ -6,6 +6,12 @@ import sys
 import json
 import statistics
 
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler  # For scaling dataset
+from sklearn.cluster import KMeans, AgglomerativeClustering, AffinityPropagation #For clustering
+from sklearn.mixture import GaussianMixture #For GMM clustering
+
 class EnableCors(object):
     name = 'enable_cors'
     api = 2
@@ -32,7 +38,7 @@ global userclusterdata
 global sizeclusters
 global stylistreturnpercent
 
-sizeclusters = {"1":[],"2":[],"3":[],"4":[],"5":[]}
+sizeclusters = {"1":[],"2":[],"3":[],"4":[],"0":[]}
 userclusterdata = {}
 with open('bodyshapecluster.csv','r') as f:
     reader = csv.reader(f)
@@ -80,6 +86,39 @@ def Removedup(duplicate):
     return final_list
 
 app = bottle.app()
+
+def doKmeans(X, nclust = 5):
+    model = KMeans(nclust)
+    model.fit(X)
+    clust_labels = model.predict(X)
+    cent = model.cluster_centers_
+    return (clust_labels, cent)
+
+@app.route('/makebodyshapcluster')
+def makebodyshapcluster():
+    data = {'uid':[],'height':[],'weight':[]}
+    with open('userprofiles.csv','r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if (row[27] != 'NULL') and (row[28] != 'NULL') and (row[28] != 'Barcelona'):
+                data['uid'].append(row[1])
+                data['height'].append(row[27])
+                data['weight'].append(float(row[28]))
+    data_df = pd.DataFrame({'uid':data['uid'], 'height':data['height'], 'weight':data['weight']})
+    heights = []
+    for i in data_df['height']:
+        b = i.split()
+        a = float(b[0])*12 + float(b[2])
+        heights.append(a)
+    new_df = pd.DataFrame({'height':heights, 'weight': data_df['weight']})
+    clust_labels, centers = doKmeans(new_df, 5)
+    #print(clust_labels, centers)
+    with open('bodyshapecluster.csv','w') as csvfile:
+        writer = csv.DictWriter(csvfile,fieldnames=['u_id','label','height', 'weight'])
+        writer.writeheader()
+        for i in range(len(data_df['uid'])):
+            writer.writerow({'u_id':data_df['uid'][i],'label':clust_labels[i],'height':new_df['height'][i], 'weight':new_df['weight'][i]})
+    return "Success"
 
 @app.route('/getstylistnames')
 def getstylist():
@@ -313,7 +352,7 @@ def getstylistclusterreturn(sid):
     global stylistnames
     global userclusterdata
     global sizeclusters
-    data = {'1':{'return': 0, 'non-return':0}, '2':{'return': 0, 'non-return':0}, '3':{'return': 0, 'non-return':0}, '4':{'return': 0, 'non-return':0}, '5':{'return': 0, 'non-return':0}}
+    data = {'1':{'return': 0, 'non-return':0}, '2':{'return': 0, 'non-return':0}, '3':{'return': 0, 'non-return':0}, '4':{'return': 0, 'non-return':0}, '0':{'return': 0, 'non-return':0}}
     with open('returncountsepe.csv','r') as f:
         reader = csv.reader(f)
         c = 0
@@ -330,7 +369,6 @@ def getstylistclusterreturn(sid):
         else:
             data[keys]['percent'] = 0
     yield json.dumps(data)
-
 
 @app.route('/makereturncountsepe')
 def makereturncountseperate():
