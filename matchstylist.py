@@ -37,7 +37,9 @@ global mediandata
 global userclusterdata
 global sizeclusters
 global stylistreturnpercent
+global clustcenters
 
+clustcenters = []
 sizeclusters = {"1":[],"2":[],"3":[],"4":[],"0":[]}
 userclusterdata = {}
 with open('bodyshapecluster.csv','r') as f:
@@ -96,6 +98,7 @@ def doKmeans(X, nclust = 5):
 
 @app.route('/makebodyshapcluster')
 def makebodyshapcluster():
+    global clustcenters
     data = {'uid':[],'height':[],'weight':[]}
     with open('userprofiles.csv','r') as f:
         reader = csv.reader(f)
@@ -112,13 +115,21 @@ def makebodyshapcluster():
         heights.append(a)
     new_df = pd.DataFrame({'height':heights, 'weight': data_df['weight']})
     clust_labels, centers = doKmeans(new_df, 5)
-    #print(clust_labels, centers)
+    print(clust_labels, centers)
+    clustcenters = []
+    for i in centers:
+        clustcenters.append([i[0], i[1]])
     with open('bodyshapecluster.csv','w') as csvfile:
         writer = csv.DictWriter(csvfile,fieldnames=['u_id','label','height', 'weight'])
         writer.writeheader()
         for i in range(len(data_df['uid'])):
             writer.writerow({'u_id':data_df['uid'][i],'label':clust_labels[i],'height':new_df['height'][i], 'weight':new_df['weight'][i]})
     return "Success"
+
+@app.route('/getcluster_centers')
+def getclustercenters():
+    global clustcenters
+    yield json.dumps(clustcenters)
 
 @app.route('/getstylistnames')
 def getstylist():
