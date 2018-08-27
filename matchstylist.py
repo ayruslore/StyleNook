@@ -38,8 +38,35 @@ global userclusterdata
 global sizeclusters
 global stylistreturnpercent
 global clustcenters
+global stylegenre_clustcenters
+global stylegenreclusterlabels
+
+stylegenreclusterlabels = {}
+with open('stylegenrecluster.csv') as f:
+    reader = csv.reader(f)
+    c = 0
+    for row in reader:
+        if c != 0:
+            stylegenreclusterlabels[row[0]] = row[1]
+        c += 1
 
 clustcenters = []
+stylegenre_clustcenters = []
+with open('shapeclustercenter.csv','r') as f:
+    reader = csv.reader(f)
+    c = 0
+    for row in reader:
+        if c != 0:
+            clustcenters.append([row[1], row[2]])
+        c += 1
+with open('stylegenreclustercenter.csv', 'r') as f:
+    reader = csv.reader(f)
+    c = 0
+    for row in reader:
+        if c != 0 :
+            stylegenre_clustcenters.append([row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]])
+        c += 1
+
 sizeclusters = {"1":[],"2":[],"3":[],"4":[],"0":[]}
 userclusterdata = {}
 with open('bodyshapecluster.csv','r') as f:
@@ -52,7 +79,6 @@ with open('bodyshapecluster.csv','r') as f:
                 sizeclusters[row[1]].append(row[0])
         c += 1
 
-#stylistreturnpercent[sid] = {'return':0, 'non-return':0,'percent':0}
 stylistreturnpercent = {}
 with open('returncountsepe.csv','r') as f:
     reader = csv.reader(f)
@@ -60,14 +86,20 @@ with open('returncountsepe.csv','r') as f:
     for row in reader:
         if c != 0:
             if row[1] not in stylistreturnpercent.keys():
-                stylistreturnpercent[row[1]] = {'return':int(row[3]) + int(row[4]) + int(row[5]), 'non-return':int(row[6]), 'percent':0}
+                stylistreturnpercent[row[1]] = {'return':int(row[3]) , 'non-return':int(row[6]), 'percent':0}
             else:
-                stylistreturnpercent[row[1]]['return'] += int(row[3]) + int(row[4]) + int(row[5])
+                stylistreturnpercent[row[1]]['return'] += int(row[3])
                 stylistreturnpercent[row[1]]['non-return'] += int(row[6])
         c += 1
 for key in stylistreturnpercent.keys():
     stylistreturnpercent[key]['percent'] = (100.0 * stylistreturnpercent[key]['return'])/(stylistreturnpercent[key]['non-return'] + stylistreturnpercent[key]['return'])
-    #print(stylistreturnpercent[key]['percent'], key)
+
+with open('stylist-vikram.csv','w') as f:
+    writer = csv.DictWriter(f,fieldnames=['s_id','total-items-shipped','items-returned'])
+    writer.writeheader()
+    for key in stylistreturnpercent:
+        writer.writerow({'s_id':key, 'total-items-shipped':stylistreturnpercent[key]['non-return']+stylistreturnpercent[key]['return'], 'items-returned':stylistreturnpercent[key]['return']})
+
 
 userdict={}
 stylistdict={}
@@ -87,14 +119,72 @@ def Removedup(duplicate):
             final_list.append(num)
     return final_list
 
-app = bottle.app()
-
 def doKmeans(X, nclust = 5):
     model = KMeans(nclust)
     model.fit(X)
     clust_labels = model.predict(X)
     cent = model.cluster_centers_
     return (clust_labels, cent)
+
+app = bottle.app()
+
+@app.route('/getstylistreturngenrecluster/<sid>')
+def stylistreturngenrecluster(sid):
+    global stylegenreclusterlabels
+    data = {}
+    with open('returncountsepe.csv','r') as csvfile:
+        reader = csv.reader(csvfile)
+        c = 0
+        for row in reader:
+            if c != 0:
+                if sid == row[1]:
+                    if stylegenreclusterlabels[row[0]] in data.keys():
+                        data[stylegenreclusterlabels[row[0]]]['return'] += int(row[3])
+                        data[stylegenreclusterlabels[row[0]]]['non-return'] += int(row[6])
+                    else:
+                        data[stylegenreclusterlabels[row[0]]] = {'return':int(row[3]) , 'non-return':int(row[6]), 'percent':0.0}
+            c += 1
+    for keys in data:
+        if (data[keys]['return'] + data[keys]['non-return']) != 0:
+            data[keys]['percent'] = (data[keys]['return'] * 100)/(data[keys]['return'] + data[keys]['non-return'])
+        else:
+            data[keys]['percent'] = 0.0
+    yield json.dumps(data)
+
+@app.route('/makestylegenrecluster')
+def stylegenrecluster():
+    global userdict, stylegenre_clustcenters
+    data = {'uid':[], 'western_classic':[], 'western_feminine':[], 'western_contemporary':[], 'western_boho':[], 'indo_western':[], 'indian_traditional':[], 'indian_classic':[], 'indian_contemporary':[], 'indian_funky':[]}
+    for uid in userdict:
+        data['uid'].append(uid)
+        data['western_classic'].append(userdict[uid][2])
+        data['western_feminine'].append(userdict[uid][3])
+        data['western_contemporary'].append(userdict[uid][4])
+        data['western_boho'].append(userdict[uid][5])
+        data['indo_western'].append(userdict[uid][6])
+        data['indian_traditional'].append(userdict[uid][7])
+        data['indian_classic'].append(userdict[uid][8])
+        data['indian_contemporary'].append(userdict[uid][9])
+        data['indian_funky'].append(userdict[uid][10])
+    new_df = pd.DataFrame({'western_classic' : data['western_classic'], 'western_feminine' : data['western_feminine'], 'western_contemporary' : data['western_contemporary'], 'western_boho' : data['western_boho'], 'indo_western' : data['indo_western'], 'indian_traditional' : data['indian_traditional'], 'indian_classic' : data['indian_classic'], 'indian_contemporary' : data['indian_contemporary'], 'indian_funky' : data['indian_funky']})
+    clust_labels, centers = doKmeans(new_df, 9)
+    print(centers)
+    with open('stylegenreclustercenter.csv','w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames = ['label', 'western_classic', 'western_feminine', 'western_contemporary', 'western_boho', 'indo_western', 'indian_traditional', 'indian_classic', 'indian_contemporary', 'indian_funky'])
+        writer.writeheader()
+        for i in range(len(centers)):
+            writer.writerow({'label':i, 'western_classic':centers[i][0], 'western_feminine':centers[i][1], 'western_contemporary':centers[i][2], 'western_boho':centers[i][3], 'indo_western':centers[i][4], 'indian_traditional':centers[i][5], 'indian_classic':centers[i][6], 'indian_contemporary':centers[i][7], 'indian_funky':centers[i][8]})
+    with open('stylegenrecluster.csv','w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames = ['uid', 'label', 'western_classic', 'western_feminine', 'western_contemporary', 'western_boho', 'indo_western', 'indian_traditional', 'indian_classic', 'indian_contemporary', 'indian_funky'])
+        writer.writeheader()
+        for i in range(len(data['uid'])):
+            writer.writerow({'uid':data['uid'][i], 'label':clust_labels[i], 'western_classic':new_df['western_classic'][i], 'western_feminine':new_df['western_feminine'][i], 'western_contemporary':new_df['western_contemporary'][i], 'western_boho':new_df['western_boho'][i], 'indo_western':new_df['indo_western'][i], 'indian_traditional':new_df['indian_traditional'][i], 'indian_classic':new_df['indian_classic'][i], 'indian_contemporary':new_df['indian_contemporary'][i], 'indian_funky':new_df['indian_funky'][i]})
+    return "Success"
+
+@app.route('/getstylegenrecluster_centers')
+def getgenreclustercenters():
+    global stylegenre_clustcenters
+    yield json.dumps(stylegenre_clustcenters)
 
 @app.route('/makebodyshapcluster')
 def makebodyshapcluster():
@@ -115,10 +205,12 @@ def makebodyshapcluster():
         heights.append(a)
     new_df = pd.DataFrame({'height':heights, 'weight': data_df['weight']})
     clust_labels, centers = doKmeans(new_df, 5)
-    print(clust_labels, centers)
-    clustcenters = []
-    for i in centers:
-        clustcenters.append([i[0], i[1]])
+    print(centers)
+    with open('shapeclustercenter.csv','w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames = ['label', 'x', 'y'])
+        writer.writeheader()
+        for i in range(len(centers)):
+            writer.writerow({'label':i, 'x':centers[i][0], 'y':centers[i][1]})
     with open('bodyshapecluster.csv','w') as csvfile:
         writer = csv.DictWriter(csvfile,fieldnames=['u_id','label','height', 'weight'])
         writer.writeheader()
@@ -352,10 +444,7 @@ def stylistdictdata(sid):
     global mediandata
     result = []
     for i in range(len(stylistdict[sid][0])):
-        if stylistdict[sid][0][i] >= mediandata[i]:
-            result.append("Good")
-        else:
-            result.append("Bad")
+        result.append([str(round(stylistdict[sid][0][i], 4)) ,str(round(mediandata[i], 4))])
     yield json.dumps(result)
 
 @app.route('/stylistreturncluster/<sid>')
@@ -485,11 +574,15 @@ def ranksidforuid(uid,sids):
     global stylistnames, stylistreturnpercent
     global stylist, stylistdict
     sids = sids.split(',')
+    max_o = -10000
+    for sid in sids:
+        if (stylistreturnpercent[sid]['return'] + stylistreturnpercent[sid]['non-return']) >= max_o:
+            max_o = stylistreturnpercent[sid]['return'] + stylistreturnpercent[sid]['non-return']
     rankings = matchsylist2(uid)
     sid = {}
     for i in range(len(rankings)):
         if rankings[i][0] in sids:
-            sid[rankings[i][0]] = rankings[i][1]
+            sid[rankings[i][0]] = rankings[i][1] * ((stylistreturnpercent[rankings[i][0]]['return'] + stylistreturnpercent[rankings[i][0]]['non-return'])/max_o)
     sid = sorted(sid.items(), key=lambda item: (item[1], item[0]), reverse=True)
     data = []
     data1 = [x[0] for x in sid]
@@ -500,8 +593,7 @@ def ranksidforuid(uid,sids):
                 data.append(lol[i])
     result = []
     for i in range(len(data)):
-        result.append([data[i][0],data[i][1], round(sid[i][1],4) , round(stylistreturnpercent[data[i][0]]['percent'],4)])
-        #print(data[i][0],data[i][1], sid[i][1], stylistreturnpercent[data[i][0]]['percent'])
+        result.append([data[i][0],data[i][1], round(sid[i][1],4) , round(stylistreturnpercent[data[i][0]]['percent'],4), stylistreturnpercent[data[i][0]]['return'] + stylistreturnpercent[data[i][0]]['non-return'], stylistreturnpercent[data[i][0]]['return']])
     yield json.dumps(result)
 
 @app.route('/stylistreturncolumn/<sid>/<num>')
@@ -730,6 +822,8 @@ def stylistreturnaccordingtocolumn(sid,num):
 cleanuserprofile()
 makevariablesagain()
 makestylistdata()
+
+print(userdict['9746'])
 
 app.install(EnableCors())
 
