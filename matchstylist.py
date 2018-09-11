@@ -141,12 +141,13 @@ def stylistreturngenrecluster(sid):
                     if stylegenreclusterlabels[row[0]] in data.keys():
                         data[stylegenreclusterlabels[row[0]]]['return'] += int(row[3])
                         data[stylegenreclusterlabels[row[0]]]['non-return'] += int(row[6])
+                        data[stylegenreclusterlabels[row[0]]]['return-nms'] += int(row[4])
                     else:
-                        data[stylegenreclusterlabels[row[0]]] = {'return':int(row[3]) , 'non-return':int(row[6]), 'percent':0.0}
+                        data[stylegenreclusterlabels[row[0]]] = {'return':int(row[3]) , 'non-return':int(row[6]), 'percent':0.0, 'return-nms':int(row[4])}
             c += 1
     for keys in data:
         if (data[keys]['return'] + data[keys]['non-return']) != 0:
-            data[keys]['percent'] = (data[keys]['return'] * 100)/(data[keys]['return'] + data[keys]['non-return'])
+            data[keys]['percent'] = (data[keys]['return-nms'] * 100)/(data[keys]['return'] + data[keys]['non-return'])
         else:
             data[keys]['percent'] = 0.0
     yield json.dumps(data)
@@ -452,7 +453,7 @@ def getstylistclusterreturn(sid):
     global stylistnames
     global userclusterdata
     global sizeclusters
-    data = {'1':{'return': 0, 'non-return':0}, '2':{'return': 0, 'non-return':0}, '3':{'return': 0, 'non-return':0}, '4':{'return': 0, 'non-return':0}, '0':{'return': 0, 'non-return':0}}
+    data = {'1':{'return': 0, 'non-return':0, 'return-shape':0}, '2':{'return': 0, 'non-return':0, 'return-shape':0}, '3':{'return': 0, 'non-return':0, 'return-shape':0}, '4':{'return': 0, 'non-return':0, 'return-shape':0}, '0':{'return': 0, 'non-return':0, 'return-shape':0}}
     with open('returncountsepe.csv','r') as f:
         reader = csv.reader(f)
         c = 0
@@ -462,10 +463,11 @@ def getstylistclusterreturn(sid):
                     if row[0] in userclusterdata.keys():
                         data[userclusterdata[row[0]]]['return'] += int(row[3])
                         data[userclusterdata[row[0]]]['non-return'] += int(row[6])
+                        data[userclusterdata[row[0]]]['return-shape'] += int(row[7])
             c += 1
     for keys in data:
         if (data[keys]['return'] + data[keys]['non-return']) != 0:
-            data[keys]['percent'] = (data[keys]['return'] * 100)/(data[keys]['return'] + data[keys]['non-return'])
+            data[keys]['percent'] = (data[keys]['return-shape'] * 100)/(data[keys]['return'] + data[keys]['non-return'])
         else:
             data[keys]['percent'] = 0
     yield json.dumps(data)
@@ -481,9 +483,10 @@ def makereturncountseperate():
                         orderids[row[2]] = 1
                     else:
                         orderids[row[2]] += 1
-    data = {'u_id':[],'s_id':[],'o_id':[],'return_count':[],'return_count nms':[],'return_count similar':[],'nonreturn_count':[]}
+    data = {'u_id':[],'s_id':[],'o_id':[],'return_count':[],'return_count nms':[],'return_count similar':[],'nonreturn_count':[], 'return_shape':[]}
     returnidsnms = []
     returnidsstih = []
+    returnshape = []
     allreturns = []
     with open('returns.csv', 'r') as f:
         reader = csv.reader(f)
@@ -495,6 +498,8 @@ def makereturncountseperate():
                         returnidsnms.append(row[2])
                     elif("similar to something I have" in row[6]):
                         returnidsstih.append(row[2])
+                    elif(('too big' in row[6]) or ('too small' in row[6])):
+                        returnshape.append(row[2])
                     if(row[2] != '1' or row[2] != '550'):
                         allreturns.append(row[2])
     returnorderids = Removedup(returnidsnms)
@@ -512,6 +517,7 @@ def makereturncountseperate():
                             data['return_count nms'].append(0)
                             data['return_count similar'].append(0)
                             data['nonreturn_count'].append(orderids[row[1]])
+                            data['return_shape'].append(0)
     for oid in allreturns:
         if oid in data['o_id']:
             i = data['o_id'].index(oid)
@@ -525,11 +531,15 @@ def makereturncountseperate():
     	if oid in data['o_id']:
     		i = data['o_id'].index(oid)
     		data['return_count similar'][i] += 1
+    for oid in returnshape:
+    	if oid in data['o_id']:
+    		i = data['o_id'].index(oid)
+    		data['return_shape'][i] += 1
     with open('returncountsepe.csv','w') as csvfile:
-        writer = csv.DictWriter(csvfile,fieldnames=['u_id','s_id','o_id','return_count','return_count nms','return_count similar','nonreturn_count'])
+        writer = csv.DictWriter(csvfile,fieldnames=['u_id','s_id','o_id','return_count','return_count nms','return_count similar','nonreturn_count', 'return_shape'])
         writer.writeheader()
         for i in range(len(data['u_id'])):
-            writer.writerow({'u_id':data['u_id'][i],'s_id':data['s_id'][i],'o_id':data['o_id'][i],'return_count':data['return_count'][i],'return_count nms':data['return_count nms'][i],'return_count similar':data['return_count similar'][i],'nonreturn_count':data['nonreturn_count'][i]})
+            writer.writerow({'u_id':data['u_id'][i],'s_id':data['s_id'][i],'o_id':data['o_id'][i],'return_count':data['return_count'][i],'return_count nms':data['return_count nms'][i],'return_count similar':data['return_count similar'][i],'nonreturn_count':data['nonreturn_count'][i], 'return_shape':data['return_shape'][i]})
 
 def matchsylist2(num):
     global userdict
@@ -582,7 +592,7 @@ def ranksidforuid(uid,sids):
     sid = {}
     for i in range(len(rankings)):
         if rankings[i][0] in sids:
-            sid[rankings[i][0]] = rankings[i][1] * ((stylistreturnpercent[rankings[i][0]]['return'] + stylistreturnpercent[rankings[i][0]]['non-return'])/max_o)
+            sid[rankings[i][0]] = rankings[i][1] * (float(stylistreturnpercent[rankings[i][0]]['return'] + stylistreturnpercent[rankings[i][0]]['non-return'])/float(max_o))
     sid = sorted(sid.items(), key=lambda item: (item[1], item[0]), reverse=True)
     data = []
     data1 = [x[0] for x in sid]
