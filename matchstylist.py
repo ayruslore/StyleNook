@@ -128,6 +128,23 @@ def doKmeans(X, nclust = 5):
 
 app = bottle.app()
 
+
+@app.route('/showstylegenreclusterlabels/<uid>')
+def showstylegenreclusterlabels(uid):
+    global stylegenreclusterlabels
+    if uid in stylegenreclusterlabels:
+        yield json.dumps(stylegenreclusterlabels[uid])
+    else:
+        yield json.dumps('False')
+
+@app.route('/showshapeclusterlabels/<uid>')
+def showshapeclusterlabels(uid):
+    global userclusterdata
+    if uid in userclusterdata:
+        yield json.dumps(userclusterdata[uid])
+    else:
+        yield json.dumps('False')
+
 @app.route('/getstylistreturngenrecluster/<sid>')
 def stylistreturngenrecluster(sid):
     global stylegenreclusterlabels
