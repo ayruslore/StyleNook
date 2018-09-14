@@ -142,6 +142,37 @@ def getclusterdata(uid):
         data['val'] = 'False'
     yield json.dumps(data)
 
+@app.route('/makedistinctusercount')
+def openreturncountsepe():
+    data = {}
+    with open('returncountsepe.csv', 'r') as f:
+        reader = csv.reader(f)
+        c = 0
+        for row in reader:
+            if c!= 0:
+                if tuple([row[0], row[1]]) not in data:
+                    data[ tuple([row[0], row[1]]) ] = {'return_count':int(row[3]), 'returns nms':int(row[4]), 'return_count similar': int(row[5]), 'nonreturn_count': int(row[6]), 'return_shape':int(row[7])}
+                else:
+                    data[ tuple([row[0], row[1]]) ]['return_count'] += int(row[3])
+                    data[ tuple([row[0], row[1]]) ]['returns nms'] += int(row[4])
+                    data[ tuple([row[0], row[1]]) ]['return_count similar'] += int(row[5])
+                    data[ tuple([row[0], row[1]]) ]['nonreturn_count'] += int(row[6])
+                    data[ tuple([row[0], row[1]]) ]['return_shape'] += int(row[7])
+            c += 1
+    keys = list(data.keys())
+    distinctuser = {}
+    for key in keys:
+        if key[1] not in distinctuser:
+            distinctuser[ key[1] ] = [ key[0] ]
+        else:
+            distinctuser[ key[1] ].append( key[0] )
+    with open('distinctuser.csv', 'w') as f:
+        writer = csv.DictWriter(f, fieldnames = ['s_id', 'u_id', 'return_count', 'returns nms', 'return_count similar', 'nonreturn_count', 'return_shape'])
+        writer.writeheader()
+        for sid in distinctuser:
+            for uids in distinctuser[ sid ]:
+                writer.writerow({'s_id': sid, 'u_id': uids, 'return_count': data[ tuple([uids, sid]) ]['return_count'], 'returns nms' : data[ tuple([uids, sid]) ]['returns nms'], 'return_count similar' : data[ tuple([uids, sid]) ]['return_count similar'], 'nonreturn_count' : data[ tuple([uids, sid]) ]['nonreturn_count'], 'return_shape' : data[ tuple([uids, sid]) ]['return_shape']})
+
 @app.route('/showstylegenreclusterlabels/<uid>')
 def showstylegenreclusterlabels(uid):
     global stylegenreclusterlabels
