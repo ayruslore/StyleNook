@@ -475,7 +475,7 @@ def cleanuserprofile():
             if (row[56]!=''):
                 userdict[row[1]].append(float(row[56]))
             else:
-                userdict[row[1]].append(0);
+                userdict[row[1]].append(0)
     listing={}
     counter=0;
     for j in range(2,11):
@@ -954,6 +954,7 @@ def stylistreturnaccordingtocolumn(sid,num):
     ifile1.close()
     ifile2 = open('userprofiles.csv','r')
     reader2 = csv.reader(ifile2)
+    ifile2.close()
     for row in reader2:
         if row[1] in uids:
             data[row[1]] = [row[int(num)]]
