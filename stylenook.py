@@ -472,8 +472,8 @@ def cleanuserprofile():
                     userdict[row[1]].append(5);
                 else:
                     userdict[row[1]].append(0);
-            if (row[56]!=''):
-                userdict[row[1]].append(float(row[56]))
+            if (row[57]!=''):
+                userdict[row[1]].append(float(row[57]))
             else:
                 userdict[row[1]].append(0)
     listing={}
